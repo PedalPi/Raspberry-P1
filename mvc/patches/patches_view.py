@@ -1,4 +1,4 @@
-from physical.mvc.view import View
+from raspberry_p1.mvc.view import View
 from raspberry_p1.component.components import Components
 
 
@@ -33,5 +33,6 @@ class PatchesView(View):
         self.rotary_encoder.when_rotated = lambda: ...
         self.rotary_encoder.when_selected = self.controller.to_effects_controller
 
-    def show_patch(self, patch):
+    def show_patch(self, patch, effect):
         self.display.show_patch(patch)
+        self.effect.effect = effect

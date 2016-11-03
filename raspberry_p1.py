@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from application.architecture.Component import Component
-
-from raspberry_p1.mvc.updates_observer_p1 import UpdatesObserverP1
-
 from raspberry_p1.action.actions_facade import ActionsFacade
-from raspberry_p1.configurations import Configurations
+from raspberry_p1.action.updates_observer_p1 import UpdatesObserverP1
 from raspberry_p1.component.components import Components
+from raspberry_p1.configurations import Configurations
 from raspberry_p1.mvc.patches.patches_controller import PatchesController
 
 
@@ -30,10 +28,12 @@ class RaspberryP1(Component):
 
         self.actions = ActionsFacade(application)
 
-        self.controllers = self.init_controllers(self.components, self.actions, self.observer)
+        self.mvc = {
+            'controllers': self.init_mvc_controllers(self)
+        }
 
     def init(self):
-        controller = self.controllers[PatchesController]
+        controller = self.mvc['controllers'][PatchesController]
         controller.start()
         controller.init(self.actions.current_patch)
 
@@ -48,9 +48,7 @@ class RaspberryP1(Component):
 
         return components
 
-    def init_controllers(self, components, actions, observer):
-        controllers = {}
-
-        controllers[PatchesController] = PatchesController(controllers, components, actions, observer)
-
-        return controllers
+    def init_mvc_controllers(self, equipment):
+        return {
+            PatchesController: PatchesController(equipment)
+        }

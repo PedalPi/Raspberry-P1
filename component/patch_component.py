@@ -5,8 +5,8 @@ from gpiozero import Button
 class PatchComponent(object):
     button = None
 
-    def __init__(self, pin):
-        self.button = Button(pin, pull_up=True)
+    def __init__(self, pin, pull_up=False):
+        self.button = Button(pin, pull_up=pull_up)
 
     @property
     def action(self):

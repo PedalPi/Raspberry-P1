@@ -81,8 +81,8 @@ class Configurations(object):
             contrast=60
         )
 
-        self.next_patch_button = PatchComponent(config['next_patch'])
-        self.before_patch_button = PatchComponent(config['before_patch'])
+        self.next_patch_button = PatchComponent(config['next_patch'], pull_up=True)
+        self.before_patch_button = PatchComponent(config['before_patch'], pull_up=True)
 
         self.effect = EffectComponent(
             pin_button=config['effect_button'],

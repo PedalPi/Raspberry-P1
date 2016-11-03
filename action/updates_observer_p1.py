@@ -1,5 +1,5 @@
 from application.model.UpdatesObserver import UpdatesObserver
-from raspberry_p0.action.actions_facade import ActionsFacade
+from raspberry_p1.action.actions_facade import ActionsFacade
 
 
 class UpdatesObserverP1(UpdatesObserver):

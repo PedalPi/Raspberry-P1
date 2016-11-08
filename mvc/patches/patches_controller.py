@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from raspberry_p1.mvc.controller import Controller
 from raspberry_p1.mvc.patches.patches_view import PatchesView
 
@@ -15,9 +14,15 @@ class PatchesController(Controller):
         self.current_effect = self.actions.current_effect
         self.view.show_patch(self.current_patch, self.current_effect)
 
+    ##########################
+    # Observer
+    ##########################
     def on_current_patch_change(self, patch, token=None):
         self.init(patch)
 
+    ##########################
+    # Actions
+    ##########################
     def to_next_patch(self):
         next_patch = self.actions.to_next_patch()
         self.init(next_patch)
@@ -33,14 +38,17 @@ class PatchesController(Controller):
             return
 
         self.actions.toggle_status_effect(effect)
-        self.to_effects_controller(effect)
+        self.to_effects_controller()
 
-    def to_effects_controller(self, effect):
-        print('Encoder click')
-        '''
-        from raspberry_p1.mvc.effects.EffectsController import EffectsController
+    ##########################
+    # Set controller
+    ##########################
+    def to_effects_controller(self):
+        if self.current_effect is None:
+            return
+
+        from raspberry_p1.mvc.effects.effects_controller import EffectsController
 
         controller = self.controllers[EffectsController]
         controller.start()
-        controller.init(self.current_patch)
-        '''
+        controller.init(self.current_patch, self.current_effect)

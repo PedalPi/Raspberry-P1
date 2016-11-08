@@ -25,6 +25,10 @@ class Controller(metaclass=ABCMeta):
     def actions(self):
         return self.equipment.actions
 
+    @property
+    def controllers(self):
+        return self.equipment.mvc['controllers']
+
     def on_current_patch_change(self, patch, token=None):
         pass
 

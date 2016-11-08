@@ -1,10 +1,16 @@
-# -*- coding: utf-8 -*-
 from application.architecture.Component import Component
+
 from raspberry_p1.action.actions_facade import ActionsFacade
 from raspberry_p1.action.updates_observer_p1 import UpdatesObserverP1
+
 from raspberry_p1.component.components import Components
-from raspberry_p1.configurations import Configurations
+
 from raspberry_p1.mvc.patches.patches_controller import PatchesController
+from raspberry_p1.mvc.effects.effects_controller import EffectsController
+
+from raspberry_p1.configurations import Configurations
+
+
 
 
 class RaspberryP1(Component):
@@ -15,6 +21,8 @@ class RaspberryP1(Component):
     :param Application application: Class application
     :param string configuration_file: Change the number pins. View raspberry_p1/config.ini for example
     """
+
+    TOKEN = 'raspberry-p1-token'
 
     def __init__(self, application, configuration_file="raspberry_p1/config.ini"):
         super(RaspberryP1, self).__init__(application)
@@ -50,5 +58,6 @@ class RaspberryP1(Component):
 
     def init_mvc_controllers(self, equipment):
         return {
-            PatchesController: PatchesController(equipment)
+            PatchesController: PatchesController(equipment),
+            EffectsController: EffectsController(equipment)
         }

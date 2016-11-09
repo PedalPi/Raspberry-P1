@@ -32,12 +32,10 @@ class PatchesController(Controller):
         self.init(before_patch)
 
     def toggle_status_effect(self):
-        effect = self.current_effect
-
-        if effect is None:
+        if self.current_effect is None:
             return
 
-        self.actions.toggle_status_effect(effect)
+        self.actions.toggle_status_effect(self.current_effect)
         self.to_effects_controller()
 
     ##########################
@@ -48,7 +46,4 @@ class PatchesController(Controller):
             return
 
         from raspberry_p1.mvc.effects.effects_controller import EffectsController
-
-        controller = self.controllers[EffectsController]
-        controller.start()
-        controller.init(self.current_patch, self.current_effect)
+        self.start_controller(EffectsController, self.current_patch, self.current_effect)

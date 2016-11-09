@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from abc import ABCMeta, abstractmethod
 
 
@@ -24,6 +23,12 @@ class Controller(metaclass=ABCMeta):
     @property
     def actions(self):
         return self.equipment.actions
+
+    def start_controller(self, controller_class, *args, **kargs):
+        controller = self.controllers[controller_class]
+
+        controller.start()
+        controller.init(*args, **kargs)
 
     @property
     def controllers(self):

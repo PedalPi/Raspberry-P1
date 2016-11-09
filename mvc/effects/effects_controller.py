@@ -25,64 +25,43 @@ class EffectsController(Controller):
     # Actions - Patch page
     ##########################
     def to_next_patch(self):
-        next_patch = self.actions.to_next_patch()
-        self.init(next_patch)
+        self.to_patches_controller(self.actions.to_next_patch())
 
     def to_before_patch(self):
-        before_patch = self.actions.to_before_patch()
-        self.init(before_patch)
-
-    def toggle_status_effect(self):
-        effect = self.current_effect
-        if effect is None:
-            return
-
-        print("Effect:", effect['uri'])
-        print(" - Index:", self.index_effect_focused)
-        print(" - Old status:", effect.status)
-        self.actions.toggle_status_effect(effect)
-        print(" - New status:", effect.status)
+        self.to_patches_controller(self.actions.to_before_patch())
 
     ##########################
     # Actions
     ##########################
+    def toggle_status_effect(self):
+        print(self.current_effect.index, self.current_effect['name'])
+        self.actions.toggle_status_effect(self.current_effect)
+
     def to_next_effect(self):
         index = self.current_effect.index + 1
-        if index == len(self.current_patch.effects):
-            return
-
-        effect = self.current_patch.effects[index]
-        self.actions.current_effect = effect
-        self.init(self.current_patch, effect)
+        if index != len(self.current_patch.effects):
+            self.to_effect(index)
 
     def to_before_effect(self):
         index = self.current_effect.index - 1
-        if index == -1:
-            return
+        if index != -1:
+            self.to_effect(index)
 
-        effect = self.current_patch.effects[index]
+    def to_effect(self, effect_index):
+        effect = self.current_patch.effects[effect_index]
         self.actions.current_effect = effect
         self.init(self.current_patch, effect)
 
     ##########################
     # Set controller
     ##########################
-    def to_patches_controller(self):
-        if self.current_effect is None:
-            return
-
+    def to_patches_controller(self, patch):
         from raspberry_p1.mvc.patches.patches_controller import PatchesController
-
-        controller = self.controllers[PatchesController]
-        controller.start()
-        controller.init(self.current_patch)
+        self.start_controller(PatchesController, patch)
 
     def to_params_controller(self):
         if self.current_effect is None:
             return
 
         from mvc.params.ParamsController import ParamsController
-
-        controller = self.controllers[ParamsController]
-        controller.start()
-        controller.init(self.current_effect)
+        self.start_controller(ParamsController, self.current_effect)

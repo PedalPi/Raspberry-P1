@@ -1,43 +1,25 @@
-from physical.controller.pedal_zero_controller.mvc.view import View
-from physical.controller.pedal_zero_controller.component.components import Components
+from raspberry_p1.mvc.p1_view import P1View
 
 
-class ParamsView(View):
-    controller = None
-
-    displays = None
-    next_patch = None
-    before_patch = None
-    effect = None
-    rotary_encoder = None
+class ParamsView(P1View):
 
     def init(self, controller):
         self.controller = controller
 
-    def init_components(self, components):
-        self.displays = components[Components.DISPLAYS]
-
-        self.next_patch = components[Components.NEXT_PATCH]
-        self.before_patch = components[Components.BEFORE_PATCH]
-
-        self.effect = components[Components.EFFECT]
-
-        self.rotary_encoder = components[Components.DIGITAL_ENCODER]
-
     def init_components_actions(self):
-        self.effect.action = self.controller.return_to_params_controller
+        self.effect.action = lambda *args: ...#self.controller.return_to_params_controller
 
-        self.next_patch.action = self.controller.return_to_params_controller
-        self.before_patch.action = self.controller.return_to_params_controller
+        self.next_patch.action = lambda *args: ...#self.controller.return_to_params_controller
+        self.before_patch.action = lambda *args: ...#self.controller.return_to_params_controller
 
         self.rotary_encoder.when_selected = self.controller.to_next_param
         self.rotary_encoder.when_rotated = self.when_rotary_rotated
 
     def when_rotary_rotated(self, state):
         if state == 1:
-            self.controller.addValue()
+            self.controller.add_value()
         else:
-            self.controller.minusValue()
+            self.controller.minus_value()
 
     def show_param(self, param):
-        self.displays.show_param(param)
+        self.display.show_param(param)

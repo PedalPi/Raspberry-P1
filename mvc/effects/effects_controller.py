@@ -34,7 +34,6 @@ class EffectsController(Controller):
     # Actions
     ##########################
     def toggle_status_effect(self):
-        print(self.current_effect.index, self.current_effect['name'])
         self.actions.toggle_status_effect(self.current_effect)
 
     def to_next_effect(self):
@@ -60,8 +59,5 @@ class EffectsController(Controller):
         self.start_controller(PatchesController, patch)
 
     def to_params_controller(self):
-        if self.current_effect is None:
-            return
-
-        from mvc.params.ParamsController import ParamsController
-        self.start_controller(ParamsController, self.current_effect)
+        from raspberry_p1.mvc.params.params_controller import ParamsController
+        self.start_controller(ParamsController, self.current_effect.params[0])

@@ -7,10 +7,9 @@ from raspberry_p1.component.components import Components
 
 from raspberry_p1.mvc.patches.patches_controller import PatchesController
 from raspberry_p1.mvc.effects.effects_controller import EffectsController
+from raspberry_p1.mvc.params.params_controller import ParamsController
 
 from raspberry_p1.configurations import Configurations
-
-
 
 
 class RaspberryP1(Component):
@@ -59,5 +58,6 @@ class RaspberryP1(Component):
     def init_mvc_controllers(self, equipment):
         return {
             PatchesController: PatchesController(equipment),
-            EffectsController: EffectsController(equipment)
+            EffectsController: EffectsController(equipment),
+            ParamsController: ParamsController(equipment)
         }

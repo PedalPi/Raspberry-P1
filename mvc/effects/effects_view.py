@@ -10,7 +10,7 @@ class EffectsView(P1View):
         self.before_patch.action = self.controller.to_before_patch
 
         self.rotary_encoder.when_rotated = self.when_rotary_rotated
-        self.rotary_encoder.when_selected = lambda *args: ...#self.controller.to_effects_controller
+        self.rotary_encoder.when_pressed = self.controller.to_params_controller
 
     def when_rotary_rotated(self, state):
         if state == 1:

@@ -1,12 +1,11 @@
 from application.controller.CurrentController import CurrentController
-from application.controller.ComponentDataController import ComponentDataController
 from application.controller.EffectController import EffectController
 
+from application.application.controller.component_data_controller import ComponentDataController
 from raspberry_p1.action.data import Data
 
 
 class ActionsFacade(object):
-    TOKEN = 'raspberry-p1-token'
 
     def __init__(self, application):
         self.app = application
@@ -15,7 +14,7 @@ class ActionsFacade(object):
     @property
     def current_patch(self):
         controller = self.app.controller(CurrentController)
-        return controller.currentPatch
+        return controller.current_patch
 
     @property
     def current_effect(self):
@@ -51,14 +50,14 @@ class ActionsFacade(object):
     def to_next_patch(self):
         controller = self.app.controller(CurrentController)
 
-        controller.toNextPatch(ActionsFacade.TOKEN)
-        return controller.currentPatch
+        controller.to_next_patch(ActionsFacade.TOKEN)
+        return controller.current_patch
 
     def to_before_patch(self):
         controller = self.app.controller(CurrentController)
 
-        controller.toBeforePatch(ActionsFacade.TOKEN)
-        return controller.currentPatch
+        controller.to_before_patch(ActionsFacade.TOKEN)
+        return controller.current_patch
 
     def toggle_status_effect(self, effect):
         controller = self.app.controller(EffectController)

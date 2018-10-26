@@ -21,8 +21,6 @@ class RaspberryP1(Component):
     :param string configuration_file: Change the number pins. View raspberry_p1/config.ini for example
     """
 
-    TOKEN = 'raspberry-p1-token'
-
     def __init__(self, application, configuration_file="raspberry_p1/config.ini"):
         super(RaspberryP1, self).__init__(application)
 

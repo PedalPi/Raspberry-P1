@@ -7,7 +7,6 @@ class UpdatesObserverP1(UpdatesObserver):
     def __init__(self):
         super().__init__()
         self.controller = None
-        self.token = ActionsFacade.TOKEN
 
     def register(self, controller):
         self.controller = controller
